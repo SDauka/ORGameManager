@@ -1,0 +1,181 @@
+2015-01-22 21:09:41 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-22 21:09:42 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-22 21:09:42 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-22 21:09:42 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-22 21:09:42 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-22 21:09:42 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-22 21:09:42 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-22 21:09:42 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-22 21:09:42 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-22 21:09:42 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-22 21:09:42 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-22 21:09:42 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-22 21:09:42 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-22 21:09:42 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-22 21:09:42 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-22 21:10:03 ERROR SessionDAOImpl:28 - Не удалось добавить подробные данные сессии. org.hibernate.PropertyValueException: not-null property references a null or transient value: kz.sdauka.orgamemanager.entity.SessionDetails.sessionBySessionId
+2015-01-22 21:42:08 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-22 21:42:08 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-22 21:42:08 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-22 21:42:08 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-22 21:42:08 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-22 21:42:08 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-22 21:42:08 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-22 21:42:08 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-22 21:42:08 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-22 21:42:08 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-22 21:42:08 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-22 21:42:08 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-22 21:42:08 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-22 21:42:09 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-22 21:42:09 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 14:44:18 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 14:44:18 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 14:44:18 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 14:44:18 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 14:44:18 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 14:44:18 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 14:44:18 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 14:44:19 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 14:44:19 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 14:44:19 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 14:44:19 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 14:44:19 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 14:44:19 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 14:44:19 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 14:44:19 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 14:45:02 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 14:45:02 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 14:45:02 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 14:45:02 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 14:45:02 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 14:45:02 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 14:45:02 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 14:45:02 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 14:45:02 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 14:45:02 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 14:45:02 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 14:45:02 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 14:45:03 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 14:45:03 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 14:45:03 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 14:51:54 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 14:51:54 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 14:51:54 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 14:51:54 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 14:51:54 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 14:51:54 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 14:51:54 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 14:51:54 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 14:51:54 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 14:51:54 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 14:51:54 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 14:51:54 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 14:51:55 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 14:51:55 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 14:51:55 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 14:52:52 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 14:52:52 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 14:52:52 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 14:52:52 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 14:52:52 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 14:52:52 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 14:52:53 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 14:52:53 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 14:52:53 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 14:52:53 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 14:52:53 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 14:52:53 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 14:52:53 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 14:52:53 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 14:52:53 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 16:56:41 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 16:56:41 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 16:56:41 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 16:56:41 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 16:56:41 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 16:56:41 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 16:56:41 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 16:56:41 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 16:56:41 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 16:56:41 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 16:56:41 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 16:56:41 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 16:56:42 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 16:56:42 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 16:56:42 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 17:01:49 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 17:01:49 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 17:01:49 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 17:01:49 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 17:01:49 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 17:01:49 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 17:01:49 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 17:01:49 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 17:01:49 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 17:01:49 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 17:01:49 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 17:01:49 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 17:01:50 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 17:01:50 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 17:01:50 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 17:04:48 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 17:04:48 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 17:04:48 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 17:04:48 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 17:04:48 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 17:04:48 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 17:04:48 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 17:04:48 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 17:04:48 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 17:04:48 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 17:04:48 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 17:04:48 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 17:04:48 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 17:04:49 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 17:04:49 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-23 17:07:57 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-23 17:07:57 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-23 17:07:57 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-23 17:07:57 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-23 17:07:57 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-23 17:07:57 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-23 17:07:57 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-23 17:07:57 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-23 17:07:57 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-23 17:07:57 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-23 17:07:57 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-23 17:07:57 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-23 17:07:58 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-23 17:07:58 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-23 17:07:58 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-24 05:44:18 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-24 05:44:18 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-24 05:44:18 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-24 05:44:18 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-24 05:44:18 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-24 05:44:18 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-24 05:44:18 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-24 05:44:18 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-24 05:44:18 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-24 05:44:18 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-24 05:44:18 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-24 05:44:18 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-24 05:44:19 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-24 05:44:19 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-24 05:44:19 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2015-01-24 05:48:57 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2015-01-24 05:48:57 INFO  Version:41 - HHH000412: Hibernate Core {4.2.2.Final}
+2015-01-24 05:48:57 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2015-01-24 05:48:57 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2015-01-24 05:48:57 INFO  Configuration:1985 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2015-01-24 05:48:57 INFO  Configuration:2004 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2015-01-24 05:48:57 INFO  Configuration:2126 - HHH000041: Configured SessionFactory: null
+2015-01-24 05:48:57 INFO  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-01-24 05:48:57 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 1
+2015-01-24 05:48:57 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: false
+2015-01-24 05:48:57 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.h2.Driver] at URL [jdbc:h2:file:C:/Users/Dauletkhan/Desktop/ORManager/ORManager]
+2015-01-24 05:48:57 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {user=ADMIN, password=****}
+2015-01-24 05:48:57 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-01-24 05:48:58 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2015-01-24 05:48:58 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
