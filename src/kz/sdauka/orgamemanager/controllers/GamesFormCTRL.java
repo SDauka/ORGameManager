@@ -15,6 +15,8 @@ import kz.sdauka.orgamemanager.entity.Game;
 import kz.sdauka.orgamemanager.entity.Session;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
 import kz.sdauka.orgamemanager.utils.*;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -52,11 +54,17 @@ public class GamesFormCTRL implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
         gameList = getAllGames();
         gamesPanel.setPadding(new Insets(15, 15, 15, 15));
         gamesPanel.setHgap(40);
         gamesPanel.setVgap(23);
         gamesPanel.setDisable(true);
+        GlobalScreen.getInstance().addNativeKeyListener(new EscKeyListener());
         OperatorBlockUtil.enableAllBlocking();
         for (Game game : gameList) {
             Pane pane = ThumbnailUtil.createPane();
@@ -130,7 +138,7 @@ public class GamesFormCTRL implements Initializable {
         Session session = new Session();
         session.setCountStart(0);
         session.setDay(new java.sql.Date(new Date().getTime()));
-        session.setOperatorByOperator(LoginFormCTRL.operator);
+        session.setOperator(LoginFormCTRL.operator.getName());
         session.setStartTime(time);
         session.setStopTime(null);
         return session;

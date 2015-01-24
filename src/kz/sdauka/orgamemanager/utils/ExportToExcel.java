@@ -27,7 +27,7 @@ public class ExportToExcel {
         File file = null;
         DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
         try {
-            file = new File("C:\\Windows\\Temp\\Отчет_" + dateFormat.format(session.getDay()) + ".xls");
+            file = new File("C:\\Windows\\Temp\\Report_" + dateFormat.format(session.getDay()) + ".xls");
             WritableWorkbook excel = Workbook.createWorkbook(file);
             WritableSheet sessions = excel.createSheet("Отчет", 0);
             WritableSheet sessionDetails = excel.createSheet("Подробности", 1);
@@ -58,17 +58,19 @@ public class ExportToExcel {
 
     private static void addCellsToSession(WritableSheet sessions, Session session) throws WriteException {
         sessions.addCell(new Label(0, 1, String.valueOf(session.getId())));
-        sessions.addCell(new Label(1, 1, String.valueOf(session.getDay())));
-        sessions.addCell(new Label(2, 1, String.valueOf(session.getStartTime())));
-        sessions.addCell(new Label(3, 1, String.valueOf(session.getStopTime())));
-        sessions.addCell(new Label(4, 1, String.valueOf(session.getCountStart())));
-        sessions.addCell(new Label(5, 1, String.valueOf(session.getSum())));
+        sessions.addCell(new Label(1, 1, session.getOperator()));
+        sessions.addCell(new Label(2, 1, String.valueOf(session.getDay())));
+        sessions.addCell(new Label(3, 1, String.valueOf(session.getStartTime())));
+        sessions.addCell(new Label(4, 1, String.valueOf(session.getStopTime())));
+        sessions.addCell(new Label(5, 1, String.valueOf(session.getCountStart())));
+        sessions.addCell(new Label(6, 1, String.valueOf(session.getSum())));
         sessions.addCell(new Label(0, 0, "ID"));
-        sessions.addCell(new Label(1, 0, "День"));
-        sessions.addCell(new Label(2, 0, "Время начала сессии"));
-        sessions.addCell(new Label(3, 0, "Время окончания сессии"));
-        sessions.addCell(new Label(4, 0, "Количество запусков"));
-        sessions.addCell(new Label(5, 0, "Сумма"));
+        sessions.addCell(new Label(1, 0, "Оператор"));
+        sessions.addCell(new Label(2, 0, "День"));
+        sessions.addCell(new Label(3, 0, "Время начала сессии"));
+        sessions.addCell(new Label(4, 0, "Время окончания сессии"));
+        sessions.addCell(new Label(5, 0, "Количество запусков"));
+        sessions.addCell(new Label(6, 0, "Сумма"));
     }
 
     private static void addCellsToSessionDetails(WritableSheet sessionDetails, List<SessionDetails> sessionDetailses) throws WriteException {

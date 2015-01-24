@@ -15,7 +15,7 @@ public class Session {
     private Timestamp stopTime;
     private int countStart;
     private int sum;
-    private Operator operatorByOperator;
+    private String operator;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +78,16 @@ public class Session {
         this.sum = sum;
     }
 
+    @Basic
+    @Column(name = "OPERATOR", nullable = true, insertable = true, updatable = true)
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,13 +116,4 @@ public class Session {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "OPERATOR", referencedColumnName = "ID", nullable = false)
-    public Operator getOperatorByOperator() {
-        return operatorByOperator;
-    }
-
-    public void setOperatorByOperator(Operator operatorByOperator) {
-        this.operatorByOperator = operatorByOperator;
-    }
 }
