@@ -28,6 +28,6 @@ public class EscKeyListener implements NativeKeyListener {
 
     public void serviceShutdown(Process process) {
         process.destroy();
-        OperatorBlockUtil.blockWindowsKey();
+        OperatorBlockUtil.enableAllBlocking();
     }
 }

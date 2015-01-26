@@ -3,34 +3,35 @@ package kz.sdauka.orgamemanager.dao.impl;
 import kz.sdauka.orgamemanager.dao.OperatorDAO;
 import kz.sdauka.orgamemanager.entity.Operator;
 import kz.sdauka.orgamemanager.utils.HibernateUtil;
-import org.hibernate.Query;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dauletkhan on 20.01.2015.
  */
 public class OperatorDAOImpl implements OperatorDAO {
+    private static final Logger LOG = Logger.getLogger(SessionDAOImpl.class);
 
     @Override
-    public Operator findOperatorByLogin(String login) throws SQLException {
+    public List<Operator> getOperators() throws SQLException {
         Session session = null;
-        Operator operator = null;
+        List<Operator> operators = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query query = session.createQuery("from Operator operator where operator.login = :login").setString("login", login);
-            operator = (Operator) query.uniqueResult();
-            session.getTransaction().commit();
+            operators = session.createCriteria(Operator.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошбика проверки авторизации", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных", JOptionPane.OK_OPTION);
+            LOG.error("Не удалось загрузить данные " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return operator;
+        return operators;
     }
 }

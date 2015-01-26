@@ -2,28 +2,19 @@ package kz.sdauka.orgamemanager.controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
 import kz.sdauka.orgamemanager.entity.Operator;
-import kz.sdauka.orgamemanager.utils.OperatorBlockUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -34,57 +25,38 @@ import java.util.concurrent.TimeUnit;
  */
 public class LoginFormCTRL implements Initializable {
     @FXML
-    private TextField login;
-    @FXML
-    private PasswordField password;
+    private ComboBox<String> operatorsComboBox;
     @FXML
     private Label errorLabel;
+    private Stage loginDialogStage;
+    private boolean okClicked = false;
+    private List<Operator> operators;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    public static Operator operator;
+
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+
+    public void setOkClicked(boolean okClicked) {
+        this.okClicked = okClicked;
+    }
+
+    public Stage getLoginDialogStage() {
+        return loginDialogStage;
+    }
+
+    public void setLoginDialogStage(Stage loginDialogStage) {
+        this.loginDialogStage = loginDialogStage;
+    }
 
     @FXML
     private void loginAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gamesForm.fxml"));
-
-        if (!login.getText().equals("") && !password.getText().equals("")) {
-            operator = getOperator(login.getText());
-            if (operator != null && password.getText().equals(operator.getPassword())) {
-                Parent root = loader.load();
-                Stage stage = new Stage();
-                stage.setTitle("Oculus Rift Game manager");
-                stage.setScene(new Scene(root));
-                stage.getIcons().add(new Image("/img/icon.png"));
-                stage.setFullScreenExitHint("");
-                stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                stage.setFullScreen(true);
-
-                stage.show();
-                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        OperatorBlockUtil.disableAllBlocking();
-                        System.exit(1);
-                    }
-                });
-                ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-
-            } else {
-                errorLabel.setText("Неправильный пароль/логин");
-                errorLabel.setTextFill(Paint.valueOf("#d30f02"));
-                service.schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                errorLabel.setText("");
-                            }
-                        });
-                    }
-                }, 2, TimeUnit.SECONDS);
-            }
+        if (operatorsComboBox.getValue() != null && !operatorsComboBox.getValue().toString().isEmpty()) {
+            GamesFormCTRL.setGeneralOperator(operators.get(operatorsComboBox.getSelectionModel().getSelectedIndex()));
+            loginDialogStage.close();
+            okClicked = true;
         } else {
-            errorLabel.setText("Неправильный пароль/логин");
+            errorLabel.setText("Выберите оператора");
             errorLabel.setTextFill(Paint.valueOf("#d30f02"));
             service.schedule(new Runnable() {
                 @Override
@@ -98,24 +70,25 @@ public class LoginFormCTRL implements Initializable {
                 }
             }, 2, TimeUnit.SECONDS);
         }
-
-
     }
 
 
-    private Operator getOperator(String login) {
-        Operator operator = null;
+    private List<Operator> getOperator() {
+        List<Operator> operators = null;
         try {
-            operator = DAOFactory.getInstance().getOperatorsDAO().findOperatorByLogin(login);
+            operators = DAOFactory.getInstance().getOperatorsDAO().getOperators();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return operator;
+        return operators;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        operators = getOperator();
+        for (Operator operator : operators) {
+            operatorsComboBox.getItems().add(operator.getName());
+        }
     }
 
 }

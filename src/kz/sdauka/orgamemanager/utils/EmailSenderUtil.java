@@ -83,6 +83,7 @@ public class EmailSenderUtil {
             // Send the complete message parts
             message.setContent(multipart);
             Transport.send(message);
+            file.delete();
         } catch (MessagingException e) {
             e.printStackTrace();
         }

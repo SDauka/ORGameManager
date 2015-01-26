@@ -8,6 +8,7 @@ import java.sql.Timestamp;
  * Created by Dauletkhan on 21.01.2015.
  */
 @Entity
+@Table(name = "SESSION", schema = "PUBLIC", catalog = "ORMANAGER")
 public class Session {
     private int id;
     private Date day;

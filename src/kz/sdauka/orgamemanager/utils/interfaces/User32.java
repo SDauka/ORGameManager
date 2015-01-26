@@ -16,6 +16,7 @@ public interface User32 extends StdCallLibrary {
 
     //  boolean ShowWindow(WinDef.HWND hWnd, int nCmdShow);
 //    boolean SetForegroundWindow(WinDef.HWND hWnd);
+    WinDef.BOOL SetWindowPos(WinDef.HWND hwnd, int hWndInsertAfter, int x, int y, int cx, int cy, int wFlags);
     WinDef.HWND ShowWindow(WinDef.HWND hWND, int nCmdShow);
 
 }

@@ -23,11 +23,10 @@ public class ExportToExcel {
     private static final Logger LOG = Logger.getLogger(ExportToExcel.class);
 
     public static File exportToExcel(Session session, List<SessionDetails> sessionDetailses) {
-        boolean result = false;
         File file = null;
         DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
         try {
-            file = new File("C:\\Windows\\Temp\\Report_" + dateFormat.format(session.getDay()) + ".xls");
+            file = new File("C:\\Windows\\Temp\\Report_" + dateFormat.format(session.getDay()) + session.getId() + ".xls");
             WritableWorkbook excel = Workbook.createWorkbook(file);
             WritableSheet sessions = excel.createSheet("Отчет", 0);
             WritableSheet sessionDetails = excel.createSheet("Подробности", 1);
@@ -38,7 +37,6 @@ public class ExportToExcel {
             expandColumn(sessionDetails, 3);
             excel.write();
             excel.close();
-            result = true;
         } catch (IOException e) {
             LOG.error(e);
         } catch (WriteException e) {

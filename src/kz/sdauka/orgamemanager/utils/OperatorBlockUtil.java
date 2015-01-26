@@ -14,6 +14,7 @@ import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
 public class OperatorBlockUtil {
     private static WinUser.HHOOK hhk;
     private static WinDef.HWND taskBarHWND;
+    private static WinDef.HWND hStartBtn;
     private static WinUser.LowLevelKeyboardProc keyboardHook;
     private static com.sun.jna.platform.win32.User32 lib;
 
@@ -72,26 +73,43 @@ public class OperatorBlockUtil {
 
     public static void hideTaskBar() {
         taskBarHWND = User32.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
+        hStartBtn = User32.instance.FindWindowExA(null, null, "Button", null);
+        if (hStartBtn != null) {
+
+            User32.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0080);
+        }
         User32.instance.ShowWindow(taskBarHWND, 0);
     }
 
     public static void showTaskBar() {
         taskBarHWND = User32.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
+        hStartBtn = User32.instance.FindWindowExA(null, null, "Button", null);
+        if (hStartBtn != null) {
+            User32.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0040);
+        }
         User32.instance.ShowWindow(taskBarHWND, 1);
     }
 
     public static void ctrlAltDelDisable() {
-        Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "DisableTaskMgr", 1);
+        if (Advapi32Util.registryKeyExists(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System")) {
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "DisableTaskMgr", 1);
+        } else {
+            Advapi32Util.registryCreateKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies", "System");
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "DisableTaskMgr", 1);
+        }
     }
+
 
     public static void ctrlAltDelEnable() {
         Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "DisableTaskMgr", 0);
     }
 
     public static void disableAllBlocking() {
-        //ctrlAltDelDisable();
         unblockWindowsKey();
         showTaskBar();
+        if (IniFileUtil.getSetting().isDisableTaskManager()) {
+            ctrlAltDelEnable();
+        }
     }
 
     public static void enableAllBlocking() {

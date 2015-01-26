@@ -3,6 +3,7 @@ package kz.sdauka.orgamemanager.utils;
 import kz.sdauka.orgamemanager.entity.Setting;
 import org.apache.log4j.Logger;
 import org.ini4j.Wini;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,25 +15,26 @@ import java.io.IOException;
 public class IniFileUtil {
     private static final Logger LOG = Logger.getLogger(IniFileUtil.class);
     private static Setting setting = readIniFile();
-    private static final String filePath = "C:\\Users\\Dauletkhan\\settings.ini";
 
     private static void createIniFile() {
+        BasicTextEncryptor encryptor = new BasicTextEncryptor();
+        encryptor.setPassword("ormanager");
         try {
-            File file = new File(filePath);
+            File file = new File(System.getProperty("user.home") + "\\AppData\\Local\\ORManager\\settings.ini");
             if (!file.exists()) {
                 file.createNewFile();
             }
-            Wini wini = new Wini(new File(filePath));
-            wini.put("Access Rights", "hideTaskBar", "true");
-            wini.put("Access Rights", "disableTaskManager", "true");
-            wini.put("Access Rights", "disableKeys", "true");
-            wini.put("Email settings", "openNotification", "true");
-            wini.put("Email settings", "closeNotification", "true");
-            wini.put("Email settings", "emailAdresat", "s.dauka@bk.ru");
-            wini.put("Email settings", "emailSender", "s.dauka@bk.ru");
-            wini.put("Email settings", "emailPassword", "240792b");
-            wini.put("Email settings", "smtp", "smtp.mail.ru");
-            wini.put("Email settings", "port", "465");
+            Wini wini = new Wini(new File(System.getProperty("user.home") + "\\AppData\\Local\\ORManager\\settings.ini"));
+            wini.put("Access Rights", "hideTaskBar", encryptor.encrypt("true"));
+            wini.put("Access Rights", "disableTaskManager", encryptor.encrypt("true"));
+            wini.put("Access Rights", "disableKeys", encryptor.encrypt("true"));
+            wini.put("Email settings", "openNotification", encryptor.encrypt("false"));
+            wini.put("Email settings", "closeNotification", encryptor.encrypt("false"));
+            wini.put("Email settings", "emailAdresat", encryptor.encrypt(""));
+            wini.put("Email settings", "emailSender", encryptor.encrypt(""));
+            wini.put("Email settings", "emailPassword", encryptor.encrypt(""));
+            wini.put("Email settings", "smtp", encryptor.encrypt(""));
+            wini.put("Email settings", "port", encryptor.encrypt(""));
             wini.store();
         } catch (IOException ex) {
             LOG.error(" create ini file is failed", ex);
@@ -40,30 +42,31 @@ public class IniFileUtil {
     }
 
     private static Setting readIniFile() {
+        BasicTextEncryptor encryptor = new BasicTextEncryptor();
+        encryptor.setPassword("ormanager");
         Setting setting1 = new Setting();
         try {
-            File file = new File(filePath);
+            File file = new File(System.getProperty("user.home") + "\\AppData\\Local\\ORManager\\settings.ini");
             if (!file.exists()) {
                 createIniFile();
             }
-            Wini wini = new Wini(new File(filePath));
-            setting1.setHideTaskBar(Boolean.parseBoolean(wini.get("Access Rights", "hideTaskBar")));
-            setting1.setDisableTaskManager(Boolean.parseBoolean(wini.get("Access Rights", "disableTaskManager")));
-            setting1.setDisableKeys(Boolean.parseBoolean(wini.get("Access Rights", "disableKeys")));
-            setting1.setOpenNotification(Boolean.parseBoolean(wini.get("Email settings", "openNotification")));
-            setting1.setCloseNotification(Boolean.parseBoolean(wini.get("Email settings", "closeNotification")));
-            setting1.setEmailAdresat(wini.get("Email settings", "emailAdresat"));
-            setting1.setEmailSender(wini.get("Email settings", "emailSender"));
-            setting1.setEmailPassword(wini.get("Email settings", "emailPassword"));
-            setting1.setSmtp(wini.get("Email settings", "smtp"));
-            setting1.setPort(wini.get("Email settings", "port"));
+            Wini wini = new Wini(new File(System.getProperty("user.home") + "\\AppData\\Local\\ORManager\\settings.ini"));
+            setting1.setHideTaskBar(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "hideTaskBar"))));
+            setting1.setDisableTaskManager(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "disableTaskManager"))));
+            setting1.setDisableKeys(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "disableKeys"))));
+            setting1.setOpenNotification(Boolean.parseBoolean(encryptor.decrypt(wini.get("Email settings", "openNotification"))));
+            setting1.setCloseNotification(Boolean.parseBoolean(encryptor.decrypt(wini.get("Email settings", "closeNotification"))));
+            setting1.setEmailAdresat(encryptor.decrypt(wini.get("Email settings", "emailAdresat")));
+            setting1.setEmailSender(encryptor.decrypt(wini.get("Email settings", "emailSender")));
+            setting1.setEmailPassword(encryptor.decrypt(wini.get("Email settings", "emailPassword")));
+            setting1.setSmtp(encryptor.decrypt(wini.get("Email settings", "smtp")));
+            setting1.setPort(encryptor.decrypt(wini.get("Email settings", "port")));
 
         } catch (IOException e) {
             LOG.error(" read ini file is failed", e);
         }
         return setting1;
     }
-
 
     public static Setting getSetting() {
         return setting;

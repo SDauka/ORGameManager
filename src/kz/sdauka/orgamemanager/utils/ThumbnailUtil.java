@@ -15,7 +15,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import kz.sdauka.orgamemanager.controllers.GamesFormCTRL;
-import kz.sdauka.orgamemanager.controllers.LoginFormCTRL;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
 import kz.sdauka.orgamemanager.entity.Game;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
@@ -99,6 +98,7 @@ public class ThumbnailUtil {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    OperatorBlockUtil.disableAllBlocking();
                     Runtime runTime = Runtime.getRuntime();
                     if (game.getAttribute() == null) {
                         process = runTime.exec(game.getPath());
@@ -110,6 +110,7 @@ public class ThumbnailUtil {
                         @Override
                         public void run() {
                             process.destroy();
+                            OperatorBlockUtil.enableAllBlocking();
                             // KeyHook.blockWindowsKey();
                         }
                     }, game.getTime(), TimeUnit.MINUTES);
@@ -120,7 +121,7 @@ public class ThumbnailUtil {
                     SessionDetails sessionDetails = new SessionDetails();
                     GamesFormCTRL.generalSession.setCountStart(GamesFormCTRL.generalSession.getCountStart() + 1);
                     GamesFormCTRL.generalSession.setSum(GamesFormCTRL.generalSession.getSum() + game.getCost());
-                    GamesFormCTRL.generalSession.setOperator(LoginFormCTRL.operator.getName());
+                    GamesFormCTRL.generalSession.setOperator(GamesFormCTRL.getGeneralOperator().getName());
                     sessionDetails.setGameName(game.getName());
                     sessionDetails.setSessionBySessionId(GamesFormCTRL.generalSession);
                     sessionDetails.setStartTime(new Timestamp(new Date().getTime()));

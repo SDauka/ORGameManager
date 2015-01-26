@@ -1,17 +1,15 @@
 package kz.sdauka.orgamemanager.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 /**
  * Created by Dauletkhan on 21.01.2015.
  */
 @Entity
+@Table(name = "ADMIN", schema = "PUBLIC", catalog = "ORMANAGER")
 public class Admin {
     private int id;
-    private String login;
     private String password;
 
     @Id
@@ -22,16 +20,6 @@ public class Admin {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "LOGIN", nullable = false, insertable = true, updatable = true, length = 15)
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     @Basic
@@ -52,7 +40,6 @@ public class Admin {
         Admin admin = (Admin) o;
 
         if (id != admin.id) return false;
-        if (login != null ? !login.equals(admin.login) : admin.login != null) return false;
         if (password != null ? !password.equals(admin.password) : admin.password != null) return false;
 
         return true;
@@ -61,7 +48,6 @@ public class Admin {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
