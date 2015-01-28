@@ -20,42 +20,38 @@ public class OperatorBlockUtil {
 
     public static void blockWindowsKey() {
         if (isWindows()) {
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    lib = com.sun.jna.platform.win32.User32.INSTANCE;
-                    WinDef.HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
-                    keyboardHook = new WinUser.LowLevelKeyboardProc() {
-                        public WinDef.LRESULT callback(int nCode, WinDef.WPARAM wParam, WinUser.KBDLLHOOKSTRUCT info) {
-                            if (nCode >= 0) {
-                                switch (info.vkCode) {
-                                    case WinUser.VK_RMENU:
-                                    case WinUser.VK_LMENU:
-                                    case 91:
-                                    case 92:
-                                        return new WinDef.LRESULT(1);
-                                    default: //do nothing
-                                }
-                            }
-                            return lib.CallNextHookEx(hhk, nCode, wParam, info.getPointer());
-                        }
-                    };
-                    hhk = lib.SetWindowsHookEx(13, keyboardHook, hMod, 0);
-
-                    // This bit never returns from GetMessage
-                    int result;
-                    WinUser.MSG msg = new WinUser.MSG();
-                    while ((result = lib.GetMessage(msg, null, 0, 0)) != 0) {
-                        if (result == -1) {
-                            break;
-                        } else {
-                            lib.TranslateMessage(msg);
-                            lib.DispatchMessage(msg);
+            new Thread(() -> {
+                lib = com.sun.jna.platform.win32.User32.INSTANCE;
+                WinDef.HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
+                keyboardHook = (nCode, wParam, info) -> {
+                    if (nCode >= 0) {
+                        switch (info.vkCode) {
+                            case WinUser.VK_RMENU:
+                            case WinUser.VK_LMENU:
+                            case WinUser.VK_LCONTROL:
+                            case WinUser.VK_RCONTROL:
+                            case 91:
+                            case 92:
+                                return new WinDef.LRESULT(1);
+                            default: //do nothing
                         }
                     }
-                    lib.UnhookWindowsHookEx(hhk);
+                    return lib.CallNextHookEx(hhk, nCode, wParam, info.getPointer());
+                };
+                hhk = lib.SetWindowsHookEx(13, keyboardHook, hMod, 0);
+
+                // This bit never returns from GetMessage
+                int result;
+                WinUser.MSG msg = new WinUser.MSG();
+                while ((result = lib.GetMessage(msg, null, 0, 0)) != 0) {
+                    if (result == -1) {
+                        break;
+                    } else {
+                        lib.TranslateMessage(msg);
+                        lib.DispatchMessage(msg);
+                    }
                 }
+                lib.UnhookWindowsHookEx(hhk);
             }).start();
         }
     }

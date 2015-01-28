@@ -1,7 +1,5 @@
 package kz.sdauka.orgamemanager.utils;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +7,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,6 +17,7 @@ import kz.sdauka.orgamemanager.controllers.GamesFormCTRL;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
 import kz.sdauka.orgamemanager.entity.Game;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,8 +37,9 @@ import java.util.concurrent.TimeUnit;
  * Created by Dauletkhan on 21.01.2015.
  */
 public class ThumbnailUtil {
+    private static final Logger LOG = Logger.getLogger(ExportToExcel.class);
     public final static ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    public static Process process;
+    public static ProcessBuilder processBuilder;
 
     public static Pane createPane() {
         Pane pane = new Pane();
@@ -56,7 +60,7 @@ public class ThumbnailUtil {
             imageView.setFitWidth(300);
             imageView.setFitHeight(150);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            LOG.error(ex);
         }
         return imageView;
     }
@@ -86,51 +90,61 @@ public class ThumbnailUtil {
     }
 
     public static Button createButton(final Game game) {
-        Button button = new Button("Играть", new ImageView("img/play2.png"));
+        final Button button = new Button("Играть", new ImageView("img/play2.png"));
         button.setLayoutX(30);
         button.setLayoutY(100);
-        button.setStyle("-fx-background-color: transparent");
+        button.setStyle("-fx-background-color: transparent;");
         button.setTextFill(Color.WHITE);
         button.setFont(Font.font("Arial", FontWeight.BOLD, 17));
-        button.defaultButtonProperty().setValue(true);
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            button.setTextFill(Color.YELLOW);
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+            button.setTextFill(Color.WHITE);
+        });
         //event ?
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    OperatorBlockUtil.disableAllBlocking();
-                    Runtime runTime = Runtime.getRuntime();
-                    if (game.getAttribute() == null) {
-                        process = runTime.exec(game.getPath());
-                    } else {
-                        process = runTime.exec(game.getPath() + " " + game.getAttribute());
-                    }
-                    // KeyHook.unblockWindowsKey();
-                    service.schedule(new Runnable() {
-                        @Override
-                        public void run() {
-                            process.destroy();
-                            OperatorBlockUtil.enableAllBlocking();
-                            // KeyHook.blockWindowsKey();
+        button.setOnAction(event -> {
+            OperatorBlockUtil.disableAllBlocking();
+            try {
+                if (game.getAttribute() == null) {
+                    processBuilder = new ProcessBuilder(game.getPath());
+                    processBuilder.directory(new File(game.getPath().substring(0, game.getPath().lastIndexOf("\\") + 1)));
+                    processBuilder.start();
+                } else {
+                    List<String> command = new ArrayList<>();
+                    command.add(game.getPath());
+                    command.addAll(Arrays.asList(game.getAttribute().split(",")));
+                    processBuilder = new ProcessBuilder(command);
+                    processBuilder.directory(new File(game.getPath().substring(0, game.getPath().lastIndexOf("\\") + 1)));
+                    processBuilder.start();
+                }
+                service.schedule(() -> {
+                    try {
+                        if (game.getPath().contains("DirectToRift")) {
+                            Runtime.getRuntime().exec("taskkill /F /IM " + game.getPath().substring(game.getPath().lastIndexOf("\\") + 1, game.getPath().lastIndexOf("_")) + ".exe");
+                        } else {
+                            processBuilder.start().destroy();
                         }
-                    }, game.getTime(), TimeUnit.MINUTES);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    SessionDetails sessionDetails = new SessionDetails();
-                    GamesFormCTRL.generalSession.setCountStart(GamesFormCTRL.generalSession.getCountStart() + 1);
-                    GamesFormCTRL.generalSession.setSum(GamesFormCTRL.generalSession.getSum() + game.getCost());
-                    GamesFormCTRL.generalSession.setOperator(GamesFormCTRL.getGeneralOperator().getName());
-                    sessionDetails.setGameName(game.getName());
-                    sessionDetails.setSessionBySessionId(GamesFormCTRL.generalSession);
-                    sessionDetails.setStartTime(new Timestamp(new Date().getTime()));
-                    DAOFactory.getInstance().getSessionDAO().setSessionDetails(sessionDetails);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                        OperatorBlockUtil.enableAllBlocking();
+                    } catch (IOException e) {
+                        LOG.error(e);
+                    }
+                }, game.getTime(), TimeUnit.MINUTES);
+            } catch (IOException e) {
+                LOG.error(e);
             }
-
+            try {
+                SessionDetails sessionDetails = new SessionDetails();
+                GamesFormCTRL.generalSession.setCountStart(GamesFormCTRL.generalSession.getCountStart() + 1);
+                GamesFormCTRL.generalSession.setSum(GamesFormCTRL.generalSession.getSum() + game.getCost());
+                GamesFormCTRL.generalSession.setOperator(GamesFormCTRL.getGeneralOperator().getName());
+                sessionDetails.setGameName(game.getName());
+                sessionDetails.setSessionBySessionId(GamesFormCTRL.generalSession);
+                sessionDetails.setStartTime(new Timestamp(new Date().getTime()));
+                DAOFactory.getInstance().getSessionDAO().setSessionDetails(sessionDetails);
+            } catch (SQLException e) {
+                LOG.error(e);
+            }
         });
         return button;
     }
@@ -143,6 +157,4 @@ public class ThumbnailUtil {
         label.setLayoutY(106);
         return label;
     }
-
-
 }

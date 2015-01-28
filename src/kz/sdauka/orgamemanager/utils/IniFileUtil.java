@@ -35,6 +35,7 @@ public class IniFileUtil {
             wini.put("Email settings", "emailPassword", encryptor.encrypt(""));
             wini.put("Email settings", "smtp", encryptor.encrypt(""));
             wini.put("Email settings", "port", encryptor.encrypt(""));
+            wini.put("Ads settings", encryptor.encrypt("ads"), "");
             wini.store();
         } catch (IOException ex) {
             LOG.error(" create ini file is failed", ex);
@@ -61,7 +62,7 @@ public class IniFileUtil {
             setting1.setEmailPassword(encryptor.decrypt(wini.get("Email settings", "emailPassword")));
             setting1.setSmtp(encryptor.decrypt(wini.get("Email settings", "smtp")));
             setting1.setPort(encryptor.decrypt(wini.get("Email settings", "port")));
-
+            setting1.setAds(encryptor.decrypt(wini.get("Ads settings", "ads")));
         } catch (IOException e) {
             LOG.error(" read ini file is failed", e);
         }

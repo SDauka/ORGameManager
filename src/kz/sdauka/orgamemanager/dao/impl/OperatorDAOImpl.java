@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Dauletkhan on 20.01.2015.
  */
 public class OperatorDAOImpl implements OperatorDAO {
-    private static final Logger LOG = Logger.getLogger(SessionDAOImpl.class);
+    private static final Logger LOG = Logger.getLogger(OperatorDAOImpl.class);
 
     @Override
     public List<Operator> getOperators() throws SQLException {
@@ -25,8 +25,9 @@ public class OperatorDAOImpl implements OperatorDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             operators = session.createCriteria(Operator.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных", JOptionPane.OK_OPTION);
+
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

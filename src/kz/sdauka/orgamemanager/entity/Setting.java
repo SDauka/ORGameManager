@@ -14,9 +14,17 @@ public class Setting {
     private String emailPassword;
     private String smtp;
     private String port;
-
+    private String ads;
 
     public Setting() {
+    }
+
+    public String getAds() {
+        return ads;
+    }
+
+    public void setAds(String ads) {
+        this.ads = ads;
     }
 
     public boolean isHideTaskBar() {

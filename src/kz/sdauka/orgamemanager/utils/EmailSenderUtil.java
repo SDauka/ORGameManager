@@ -1,5 +1,7 @@
 package kz.sdauka.orgamemanager.utils;
 
+import org.apache.log4j.Logger;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -18,6 +20,7 @@ public class EmailSenderUtil {
     private String sender;
     private String password;
     private Properties props;
+    private static final Logger LOG = Logger.getLogger(EmailSenderUtil.class);
 
     public EmailSenderUtil() {
         this.sender = IniFileUtil.getSetting().getEmailSender();
@@ -51,7 +54,7 @@ public class EmailSenderUtil {
             //отправляем сообщение
             Transport.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            LOG.error(e);
         }
     }
 
@@ -85,7 +88,7 @@ public class EmailSenderUtil {
             Transport.send(message);
             file.delete();
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 }

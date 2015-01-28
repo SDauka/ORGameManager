@@ -13,9 +13,16 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Сессия">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#startSession" text="Начать сессию"/>
-                        <MenuItem mnemonicParsing="false" onAction="#stopSession" text="Завершить сессию"/>
+                        <MenuItem fx:id="startSessionBtn" mnemonicParsing="false" onAction="#startSession"
+                                  text="Начать сессию"/>
+                        <MenuItem fx:id="stopSessionBtn" disable="true" mnemonicParsing="false" onAction="#stopSession"
+                                  text="Завершить сессию"/>
                         <MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Закрыть программу"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Реклама">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#RunAdsAction" text="Запустить рекламу"/>
                     </items>
                 </Menu>
             </menus>

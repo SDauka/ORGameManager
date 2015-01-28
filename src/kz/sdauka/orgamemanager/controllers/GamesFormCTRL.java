@@ -1,30 +1,30 @@
 package kz.sdauka.orgamemanager.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
 import kz.sdauka.orgamemanager.entity.Game;
 import kz.sdauka.orgamemanager.entity.Operator;
 import kz.sdauka.orgamemanager.entity.Session;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
 import kz.sdauka.orgamemanager.utils.*;
+import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -40,18 +40,17 @@ import java.util.ResourceBundle;
 public class GamesFormCTRL implements Initializable {
     private static Stage stage;
     @FXML
-    private VBox vbox;
+    private MenuItem startSessionBtn;
+    @FXML
+    private MenuItem stopSessionBtn;
     @FXML
     private TilePane gamesPanel;
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private AnchorPane anchorPane;
     private List<Game> gameList;
     private static Operator generalOperator;
     private boolean sessionStart = false;
     public static Session generalSession;
     private EmailSenderUtil emailSenderUtil = new EmailSenderUtil();
+    private static final Logger LOG = Logger.getLogger(GamesFormCTRL.class);
 
     public static Operator getGeneralOperator() {
         return generalOperator;
@@ -94,12 +93,13 @@ public class GamesFormCTRL implements Initializable {
         }
     }
 
+
     private List<Game> getAllGames() {
         List<Game> games = new ArrayList<>();
         try {
             games.addAll(DAOFactory.getInstance().getGamesDAO().getAllGames());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
 
         return games;
@@ -113,7 +113,7 @@ public class GamesFormCTRL implements Initializable {
             final Stage dialogStage = new Stage();
             dialogStage.setTitle("Выберите оператора");
             dialogStage.getIcons().add(new Image("/img/icon.png"));
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
@@ -122,16 +122,13 @@ public class GamesFormCTRL implements Initializable {
             controller.setLoginDialogStage(dialogStage);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-            dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    dialogStage.close();
-                }
+            dialogStage.setOnCloseRequest(event -> {
+                dialogStage.close();
             });
             return controller.isOkClicked();
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded
-            e.printStackTrace();
+            LOG.error(e);
             return false;
         }
     }
@@ -143,30 +140,38 @@ public class GamesFormCTRL implements Initializable {
                 DAOFactory.getInstance().getSessionDAO().setSession(setStartSessionSettings(new Timestamp(new Date().getTime())));
                 generalSession = DAOFactory.getInstance().getSessionDAO().getSession();
                 sessionStart = true;
-                if (IniFileUtil.getSetting().isOpenNotification() || InternetUtil.checkInternetConnection()) {
+                if (IniFileUtil.getSetting().isOpenNotification() && InternetUtil.checkInternetConnection()) {
                     emailSenderUtil.sendStartSession(generalOperator.getName());
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOG.error(e);
             }
             gamesPanel.setDisable(false);
+            startSessionBtn.setDisable(true);
+            stopSessionBtn.setDisable(false);
         }
     }
 
     public void stopSession(ActionEvent actionEvent) {
-
         //отправка почты о завершении сессии
         //завершения сессии
         stopGeneralSession();
         gamesPanel.setDisable(true);
-
+        startSessionBtn.setDisable(false);
+        stopSessionBtn.setDisable(true);
     }
 
     public void closeProgram(ActionEvent actionEvent) {
         if (sessionStart) {
             stopGeneralSession();
         }
+        HibernateUtil.shutdown();
         OperatorBlockUtil.disableAllBlocking();
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            LOG.error(e);
+        }
         System.exit(1);
     }
 
@@ -177,11 +182,11 @@ public class GamesFormCTRL implements Initializable {
             DAOFactory.getInstance().getSessionDAO().updateSession(generalSession);
             detailses = DAOFactory.getInstance().getSessionDAO().getAllSessionDetails(generalSession.getId());
             sessionStart = false;
-            if (IniFileUtil.getSetting().isCloseNotification() || InternetUtil.checkInternetConnection()) {
+            if (IniFileUtil.getSetting().isCloseNotification() && InternetUtil.checkInternetConnection()) {
                 emailSenderUtil.sendStopSession(generalOperator.getName(), ExportToExcel.exportToExcel(generalSession, detailses));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -195,4 +200,17 @@ public class GamesFormCTRL implements Initializable {
         return session;
     }
 
+    public void RunAdsAction(ActionEvent actionEvent) {
+        if (!IniFileUtil.getSetting().getAds().equals("")) {
+            try {
+                Desktop.getDesktop().open(new File(IniFileUtil.getSetting().getAds()));
+            } catch (IOException e) {
+                LOG.error(e);
+                JOptionPane.showMessageDialog(null, "Укажите правильный путь", "Не верный путь к файлу", JOptionPane.OK_OPTION);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Установите в настройках рекламу", "Нет данных", JOptionPane.OK_OPTION);
+        }
+
+    }
 }

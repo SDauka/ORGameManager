@@ -29,8 +29,8 @@ public class SessionDAOImpl implements SessionDAO {
             sessionDetails = (List<SessionDetails>) query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

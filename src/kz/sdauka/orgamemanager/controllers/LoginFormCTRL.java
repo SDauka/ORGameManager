@@ -10,6 +10,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
 import kz.sdauka.orgamemanager.entity.Operator;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,7 @@ public class LoginFormCTRL implements Initializable {
     private boolean okClicked = false;
     private List<Operator> operators;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+    private static final Logger LOG = Logger.getLogger(LoginFormCTRL.class);
 
     public boolean isOkClicked() {
         return okClicked;
@@ -58,16 +60,10 @@ public class LoginFormCTRL implements Initializable {
         } else {
             errorLabel.setText("Выберите оператора");
             errorLabel.setTextFill(Paint.valueOf("#d30f02"));
-            service.schedule(new Runnable() {
-                @Override
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            errorLabel.setText("");
-                        }
-                    });
-                }
+            service.schedule(() -> {
+                Platform.runLater(() -> {
+                    errorLabel.setText("");
+                });
             }, 2, TimeUnit.SECONDS);
         }
     }
@@ -78,7 +74,7 @@ public class LoginFormCTRL implements Initializable {
         try {
             operators = DAOFactory.getInstance().getOperatorsDAO().getOperators();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return operators;
     }

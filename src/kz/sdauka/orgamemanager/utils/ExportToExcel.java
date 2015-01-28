@@ -37,9 +37,7 @@ public class ExportToExcel {
             expandColumn(sessionDetails, 3);
             excel.write();
             excel.close();
-        } catch (IOException e) {
-            LOG.error(e);
-        } catch (WriteException e) {
+        } catch (IOException | WriteException e) {
             LOG.error(e);
         }
         return file;

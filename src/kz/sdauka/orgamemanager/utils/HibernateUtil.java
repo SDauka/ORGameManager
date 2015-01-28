@@ -1,5 +1,6 @@
 package kz.sdauka.orgamemanager.utils;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -12,7 +13,7 @@ public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
     private static ServiceRegistry serviceRegistry;
-
+    private static final Logger LOG = Logger.getLogger(HibernateUtil.class);
     private static SessionFactory buildSessionFactory() {
         try {
             // Создает сессию с hibernate.cfg.xml
@@ -22,7 +23,7 @@ public class HibernateUtil {
 
             return configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            LOG.error("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

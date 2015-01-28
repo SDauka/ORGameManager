@@ -1,21 +1,24 @@
 package kz.sdauka.orgamemanager;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import kz.sdauka.orgamemanager.utils.ExportToExcel;
+import kz.sdauka.orgamemanager.utils.HibernateUtil;
 import kz.sdauka.orgamemanager.utils.OperatorBlockUtil;
+import org.apache.log4j.Logger;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 /**
  * Created by Dauletkhan on 16.01.2015.
  */
 public class Main extends Application {
-
+    private static final Logger LOG = Logger.getLogger(ExportToExcel.class);
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -29,12 +32,15 @@ public class Main extends Application {
         stage.setFullScreen(true);
         stage.setAlwaysOnTop(true);
         stage.show();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                OperatorBlockUtil.disableAllBlocking();
-                System.exit(1);
+        stage.setOnCloseRequest(event -> {
+            try {
+                GlobalScreen.unregisterNativeHook();
+            } catch (NativeHookException e) {
+                LOG.error(e);
             }
+            HibernateUtil.shutdown();
+            OperatorBlockUtil.disableAllBlocking();
+            System.exit(1);
         });
     }
 
