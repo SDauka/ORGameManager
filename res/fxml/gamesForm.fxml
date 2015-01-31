@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      style="-fx-background-color: #242424;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="kz.sdauka.orgamemanager.controllers.GamesFormCTRL">
     <children>
         <MenuBar prefHeight="25.0" prefWidth="771.0">
@@ -31,11 +31,10 @@
                     maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                     style="-fx-background-color: transparent;">
             <content>
-                <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                            style="-fx-background-color: #242424;">
+                <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
                         <TilePane fx:id="gamesPanel" hgap="15.0" maxHeight="1.7976931348623157E308"
-                                  maxWidth="1.7976931348623157E308" prefColumns="4" prefRows="4" vgap="15.0">
+                                  maxWidth="1.7976931348623157E308" prefColumns="0" prefRows="0" vgap="15.0">
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                             </padding>

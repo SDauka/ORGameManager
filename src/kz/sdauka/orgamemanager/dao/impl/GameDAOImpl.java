@@ -1,12 +1,13 @@
 package kz.sdauka.orgamemanager.dao.impl;
 
+import kz.sdauka.orgamemanager.controllers.GamesFormCTRL;
 import kz.sdauka.orgamemanager.dao.GameDAO;
 import kz.sdauka.orgamemanager.entity.Game;
 import kz.sdauka.orgamemanager.utils.HibernateUtil;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.hibernate.Session;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,8 @@ public class GameDAOImpl implements GameDAO {
             games = session.createCriteria(Game.class).list();
         } catch (Exception e) {
             LOG.error("Не удалось загрузить данные " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
-        } finally {
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка загрузки данных").message("Не удалось загрузить данные")
+                    .showError();
             if (session != null && session.isOpen()) {
                 session.close();
             }

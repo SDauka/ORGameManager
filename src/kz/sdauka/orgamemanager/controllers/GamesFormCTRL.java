@@ -19,10 +19,10 @@ import kz.sdauka.orgamemanager.entity.Session;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
 import kz.sdauka.orgamemanager.utils.*;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.LogManager;
 
 /**
  * Created by Dauletkhan on 20.01.2015.
@@ -60,7 +61,7 @@ public class GamesFormCTRL implements Initializable {
         GamesFormCTRL.generalOperator = generalOperator;
     }
 
-    public Stage getStage() {
+    public static Stage getStage() {
         return stage;
     }
 
@@ -70,8 +71,10 @@ public class GamesFormCTRL implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         try {
             GlobalScreen.registerNativeHook();
+            LogManager.getLogManager().reset();
         } catch (NativeHookException e) {
             e.printStackTrace();
         }
@@ -79,8 +82,9 @@ public class GamesFormCTRL implements Initializable {
         gamesPanel.setPadding(new Insets(15, 15, 15, 15));
         gamesPanel.setHgap(40);
         gamesPanel.setVgap(23);
+        gamesPanel.setPrefColumns(gd.getDisplayMode().getWidth() / 340);
         gamesPanel.setDisable(true);
-        GlobalScreen.getInstance().addNativeKeyListener(new EscKeyListener());
+        GlobalScreen.getInstance().addNativeKeyListener(new KeyListener());
         OperatorBlockUtil.enableAllBlocking();
         for (Game game : gameList) {
             Pane pane = ThumbnailUtil.createPane();
@@ -149,6 +153,7 @@ public class GamesFormCTRL implements Initializable {
             gamesPanel.setDisable(false);
             startSessionBtn.setDisable(true);
             stopSessionBtn.setDisable(false);
+            LOG.info("Сессия началась. Оператор " + generalOperator.getName());
         }
     }
 
@@ -159,6 +164,7 @@ public class GamesFormCTRL implements Initializable {
         gamesPanel.setDisable(true);
         startSessionBtn.setDisable(false);
         stopSessionBtn.setDisable(true);
+        LOG.info("Сессия завершилась. Оператор " + generalOperator.getName());
     }
 
     public void closeProgram(ActionEvent actionEvent) {
@@ -172,6 +178,7 @@ public class GamesFormCTRL implements Initializable {
         } catch (NativeHookException e) {
             LOG.error(e);
         }
+        LOG.info("Завершение работы программы. Оператор ");
         System.exit(1);
     }
 
@@ -201,16 +208,20 @@ public class GamesFormCTRL implements Initializable {
     }
 
     public void RunAdsAction(ActionEvent actionEvent) {
-        if (!IniFileUtil.getSetting().getAds().equals("")) {
+        if (IniFileUtil.getSetting().getAds() != null && !IniFileUtil.getSetting().getAds().isEmpty()) {
             try {
                 Desktop.getDesktop().open(new File(IniFileUtil.getSetting().getAds()));
+                LOG.info("Запуск рекламы. Оператор " + generalOperator.getName());
             } catch (IOException e) {
                 LOG.error(e);
-                JOptionPane.showMessageDialog(null, "Укажите правильный путь", "Не верный путь к файлу", JOptionPane.OK_OPTION);
+                Dialogs.create().owner(stage).title("Не верный путь к файлу").message("Укажите правильный путь")
+                        .showError();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Установите в настройках рекламу", "Нет данных", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(stage).title("Нет данных").message("Установите в настройках рекламу")
+                    .showError();
         }
 
     }
+
 }

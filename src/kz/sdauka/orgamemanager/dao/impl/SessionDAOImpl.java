@@ -1,13 +1,14 @@
 package kz.sdauka.orgamemanager.dao.impl;
 
+import kz.sdauka.orgamemanager.controllers.GamesFormCTRL;
 import kz.sdauka.orgamemanager.dao.SessionDAO;
 import kz.sdauka.orgamemanager.entity.Session;
 import kz.sdauka.orgamemanager.entity.SessionDetails;
 import kz.sdauka.orgamemanager.utils.HibernateUtil;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.hibernate.Query;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ public class SessionDAOImpl implements SessionDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось загрузить данные " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка загрузки данных").message("Не удалось загрузить данные")
+                    .showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -49,7 +51,8 @@ public class SessionDAOImpl implements SessionDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось добавить подробные данные сессии. " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось добавить подробные данные сессии", "Ошибка при вставке", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка при вставке").message("Не удалось добавить подробные данные сессии")
+                    .showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -67,7 +70,8 @@ public class SessionDAOImpl implements SessionDAO {
             session1.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось добавить данные сессии. " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось добавить данные сессии", "Ошибка при вставке", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка при вставке").message("Не удалось добавить данные сессии")
+                    .showError();
         } finally {
             if (session1 != null && session1.isOpen()) {
 
@@ -86,7 +90,8 @@ public class SessionDAOImpl implements SessionDAO {
             session1.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось обновить данные сессии. " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось обновить данные сессии", "Ошибка при обновлении", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка при обновлении").message("Не удалось обновить данные сессии")
+                    .showError();
         } finally {
             if (session1 != null && session1.isOpen()) {
                 session1.close();
@@ -107,7 +112,8 @@ public class SessionDAOImpl implements SessionDAO {
             session1.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Вывод последней добавленной сессии не удалась. " + e);
-            JOptionPane.showMessageDialog(null, "Вывод последней добавленной сессии не удалась", "Ошбика проверки авторизации", JOptionPane.OK_OPTION);
+            Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошбика проверки авторизации").message("Вывод последней добавленной сессии не удалась")
+                    .showError();
         } finally {
             if (session1 != null && session1.isOpen()) {
                 session1.close();
