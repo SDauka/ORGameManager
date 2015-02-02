@@ -15,12 +15,21 @@ public class Setting {
     private String smtp;
     private String port;
     private String ads;
+    private String obs;
 
     public Setting() {
     }
 
     public String getAds() {
         return ads;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public void setAds(String ads) {

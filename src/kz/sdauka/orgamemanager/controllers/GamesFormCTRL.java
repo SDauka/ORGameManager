@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kz.sdauka.orgamemanager.dao.factory.DAOFactory;
@@ -40,6 +41,8 @@ import java.util.logging.LogManager;
  */
 public class GamesFormCTRL implements Initializable {
     private static Stage stage;
+    @FXML
+    private VBox vbox;
     @FXML
     private MenuItem startSessionBtn;
     @FXML

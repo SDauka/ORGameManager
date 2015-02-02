@@ -30,8 +30,30 @@ public class Main extends Application {
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setFullScreen(true);
-        stage.setAlwaysOnTop(true);
+//        stage.setAlwaysOnTop(true);
         stage.show();
+//        stage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                if(event.getCode() == KeyCode.BACK_QUOTE){
+//                    WinDef.HWND hwnd = User32.INSTANCE.FindWindow("OBSWindowClass", null);
+//                    if (hwnd == null) {
+//                        try {
+//                            if (IniFileUtil.getSetting().getObs() != null && !IniFileUtil.getSetting().getObs().isEmpty()) {
+//                                Runtime.getRuntime().exec(IniFileUtil.getSetting().getObs());
+//                            } else {
+//                                Platform.runLater(() -> Dialogs.create().owner(GamesFormCTRL.getStage()).title("Ошибка запуска OBS").message("Не удалось найти OBS").showError());
+//                            }
+//                        } catch (IOException e1) {
+//                            LOG.error(e1);
+//                        }
+//                    }else {
+//                        User32.INSTANCE.ShowWindow(hwnd,3);
+//                    }
+//                }
+//
+//            }
+//        });
         stage.setOnCloseRequest(event -> {
             try {
                 GlobalScreen.unregisterNativeHook();

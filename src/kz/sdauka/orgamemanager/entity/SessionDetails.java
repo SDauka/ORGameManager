@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 public class SessionDetails {
     private int id;
     private Timestamp startTime;
+    private String workTime;
     private Session sessionBySessionId;
     private String gameName;
 
@@ -33,6 +34,16 @@ public class SessionDetails {
 
     public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
+    }
+
+    @Basic
+    @Column(name = "WORK_TIME", nullable = true, insertable = true, updatable = true)
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
     }
 
     @Basic

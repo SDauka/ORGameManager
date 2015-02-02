@@ -4,7 +4,7 @@ import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
-import kz.sdauka.orgamemanager.utils.interfaces.User32;
+import kz.sdauka.orgamemanager.utils.interfaces.User32Extra;
 
 import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
 
@@ -28,8 +28,6 @@ public class OperatorBlockUtil {
                         switch (info.vkCode) {
                             case WinUser.VK_RMENU:
                             case WinUser.VK_LMENU:
-                            case WinUser.VK_LCONTROL:
-                            case WinUser.VK_RCONTROL:
                             case 91:
                             case 92:
                                 return new WinDef.LRESULT(1);
@@ -68,22 +66,31 @@ public class OperatorBlockUtil {
     }
 
     public static void hideTaskBar() {
-        taskBarHWND = User32.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
-        hStartBtn = User32.instance.FindWindowExA(null, null, "Button", null);
+        taskBarHWND = User32Extra.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
+        hStartBtn = User32Extra.instance.FindWindowExA(null, null, "Button", null);
         if (hStartBtn != null) {
 
-            User32.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0080);
+            User32Extra.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0080);
         }
-        User32.instance.ShowWindow(taskBarHWND, 0);
+        User32Extra.instance.ShowWindow(taskBarHWND, 0);
     }
 
     public static void showTaskBar() {
-        taskBarHWND = User32.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
-        hStartBtn = User32.instance.FindWindowExA(null, null, "Button", null);
+        taskBarHWND = User32Extra.instance.FindWindowExA(null, null, "Shell_TrayWnd", null);
+        hStartBtn = User32Extra.instance.FindWindowExA(null, null, "Button", null);
         if (hStartBtn != null) {
-            User32.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0040);
+            User32Extra.instance.SetWindowPos(hStartBtn, 0, 0, 0, 0, 0, 0x0040);
         }
-        User32.instance.ShowWindow(taskBarHWND, 1);
+        User32Extra.instance.ShowWindow(taskBarHWND, 1);
+    }
+
+    public static void hideCharms() {
+        Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 1);
+    }
+
+
+    public static void showCharms() {
+        Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 0);
     }
 
     public static void ctrlAltDelDisable() {
@@ -103,6 +110,7 @@ public class OperatorBlockUtil {
     public static void disableAllBlocking() {
         unblockWindowsKey();
         showTaskBar();
+        showCharms();
         if (IniFileUtil.getSetting().isDisableTaskManager()) {
             ctrlAltDelEnable();
         }
@@ -117,6 +125,7 @@ public class OperatorBlockUtil {
         }
         if (IniFileUtil.getSetting().isHideTaskBar()) {
             hideTaskBar();
+            hideCharms();
         }
     }
 }
