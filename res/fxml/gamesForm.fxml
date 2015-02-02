@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      style="-fx-background-color: beige" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="kz.sdauka.orgamemanager.controllers.GamesFormCTRL">
     <children>
         <MenuBar prefHeight="25.0" prefWidth="771.0">
@@ -31,7 +31,8 @@
                     maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                     style="-fx-background-color: transparent;">
             <content>
-                <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <AnchorPane style="-fx-background-color: beige" fx:id="anchorPane" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308">
                     <children>
                         <TilePane fx:id="gamesPanel" hgap="15.0" maxHeight="1.7976931348623157E308"
                                   maxWidth="1.7976931348623157E308" prefColumns="0" prefRows="0" vgap="15.0">
