@@ -145,12 +145,17 @@ public class ThumbnailUtil {
                         WinNT.HANDLE gameHandle = Kernel32.INSTANCE.OpenProcess(Kernel32.SYNCHRONIZE, false, pid);
                         Kernel32.INSTANCE.WaitForSingleObject(gameHandle, Kernel32.INFINITE);
                         long timeSpent = System.currentTimeMillis() - startTime;
-
                         String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeSpent),
                                 TimeUnit.MILLISECONDS.toMinutes(timeSpent) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeSpent)),
                                 TimeUnit.MILLISECONDS.toSeconds(timeSpent) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeSpent)));
                         sessionDetails.setWorkTime(hms);
                         DAOFactory.getInstance().getSessionDAO().setSessionDetails(sessionDetails);
+                        if (IniFileUtil.getSetting().isDisableTaskManager()) {
+                            OperatorBlockUtil.ctrlAltDelDisable();
+                        }
+                        if (IniFileUtil.getSetting().isHideTaskBar()) {
+                            OperatorBlockUtil.hideTaskBar();
+                        }
                     } catch (SQLException e) {
                         LOG.error(e);
                     }

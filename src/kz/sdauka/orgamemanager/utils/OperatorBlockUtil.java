@@ -85,12 +85,16 @@ public class OperatorBlockUtil {
     }
 
     public static void hideCharms() {
-        Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 1);
+        if (System.getProperty("os.version").equals("6.3") || System.getProperty("os.version").equals("6.2")) {
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 1);
+        }
     }
 
 
     public static void showCharms() {
-        Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 0);
+        if (System.getProperty("os.version").equals("6.3") || System.getProperty("os.version").equals("6.2")) {
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 0);
+        }
     }
 
     public static void ctrlAltDelDisable() {
