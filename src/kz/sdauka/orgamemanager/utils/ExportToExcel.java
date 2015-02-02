@@ -71,13 +71,15 @@ public class ExportToExcel {
 
     private static void addCellsToSessionDetails(WritableSheet sessionDetails, List<SessionDetails> sessionDetailses) throws WriteException {
         sessionDetails.addCell(new Label(0, 0, "ID"));
-        sessionDetails.addCell(new Label(1, 0, "Время начала сессии"));
-        sessionDetails.addCell(new Label(2, 0, "Название игры"));
+        sessionDetails.addCell(new Label(1, 0, "Время начала игры"));
+        sessionDetails.addCell(new Label(2, 0, "Продолжительность"));
+        sessionDetails.addCell(new Label(3, 0, "Название игры"));
         for (int i = 0; i < sessionDetailses.size(); i++) {
             SessionDetails details = sessionDetailses.get(i);
             sessionDetails.addCell(new Label(0, i + 1, String.valueOf(details.getId())));
             sessionDetails.addCell(new Label(1, i + 1, String.valueOf(details.getStartTime())));
-            sessionDetails.addCell(new Label(2, i + 1, details.getGameName()));
+            sessionDetails.addCell(new Label(2, i + 1, String.valueOf(details.getWorkTime())));
+            sessionDetails.addCell(new Label(3, i + 1, details.getGameName()));
         }
 
     }
