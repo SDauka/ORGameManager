@@ -23,7 +23,7 @@ public class Admin {
     }
 
     @Basic
-    @Column(name = "PASSWORD", nullable = false, insertable = true, updatable = true, length = 15)
+    @Column(name = "PASSWORD", nullable = false, insertable = true, updatable = true, length = 2147483647)
     public String getPassword() {
         return password;
     }

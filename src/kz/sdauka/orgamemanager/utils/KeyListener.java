@@ -20,9 +20,7 @@ public class KeyListener implements NativeKeyListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
         if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-            if (ThumbnailUtil.processEntry != null) {
                 serviceShutdown();
-            }
         }
 
         if (e.getKeyCode() == NativeKeyEvent.VC_BACKQUOTE) {

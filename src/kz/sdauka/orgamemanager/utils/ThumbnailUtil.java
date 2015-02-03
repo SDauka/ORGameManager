@@ -1,7 +1,6 @@
 package kz.sdauka.orgamemanager.utils;
 
 import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.Tlhelp32;
 import com.sun.jna.platform.win32.WinNT;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -28,7 +27,6 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 public class ThumbnailUtil {
     private static final Logger LOG = Logger.getLogger(ThumbnailUtil.class);
     public static Timer service;
-    public static List<Tlhelp32.PROCESSENTRY32.ByReference> processEntry;
     public static int pid;
     public static TimerTask timeOut;
 
@@ -111,7 +108,7 @@ public class ThumbnailUtil {
             if (IniFileUtil.getSetting().isDisableTaskManager()) {
                 OperatorBlockUtil.ctrlAltDelEnable();
                     }
-            if (IniFileUtil.getSetting().isHideTaskBar()) {
+            if (IniFileUtil.getSetting().isHideTaskBar() && IniFileUtil.getSetting().isDisableAltTab()) {
                 OperatorBlockUtil.showTaskBar();
             }
             pid = GameProcessUtil.startGame(game);
@@ -156,6 +153,8 @@ public class ThumbnailUtil {
                         if (IniFileUtil.getSetting().isHideTaskBar()) {
                             OperatorBlockUtil.hideTaskBar();
                         }
+                        timeOut.cancel();
+                        service.cancel();
                     } catch (SQLException e) {
                         LOG.error(e);
                     }

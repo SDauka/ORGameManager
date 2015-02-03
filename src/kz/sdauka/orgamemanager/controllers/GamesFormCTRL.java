@@ -214,7 +214,6 @@ public class GamesFormCTRL implements Initializable {
         if (IniFileUtil.getSetting().getAds() != null && !IniFileUtil.getSetting().getAds().isEmpty()) {
             try {
                 Desktop.getDesktop().open(new File(IniFileUtil.getSetting().getAds()));
-                LOG.info("Запуск рекламы. Оператор " + generalOperator.getName());
             } catch (IOException e) {
                 LOG.error(e);
                 Dialogs.create().owner(stage).title("Не верный путь к файлу").message("Укажите правильный путь")

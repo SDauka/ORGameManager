@@ -25,13 +25,18 @@ public class OperatorBlockUtil {
                 WinDef.HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
                 keyboardHook = (nCode, wParam, info) -> {
                     if (nCode >= 0) {
-                        switch (info.vkCode) {
-                            case WinUser.VK_RMENU:
-                            case WinUser.VK_LMENU:
-                            case 91:
-                            case 92:
+                        if (info.vkCode == 115) {
+                            if (IniFileUtil.getSetting().isDisableAltF4()) {
                                 return new WinDef.LRESULT(1);
-                            default: //do nothing
+                            }
+                        } else if (info.vkCode == 9) {
+                            if (IniFileUtil.getSetting().isDisableAltTab()) {
+                                return new WinDef.LRESULT(1);
+                            }
+                        } else if (info.vkCode == 91 || info.vkCode == 92) {
+                            if (IniFileUtil.getSetting().isDisableWin()) {
+                                return new WinDef.LRESULT(1);
+                            }
                         }
                     }
                     return lib.CallNextHookEx(hhk, nCode, wParam, info.getPointer());
@@ -87,6 +92,8 @@ public class OperatorBlockUtil {
     public static void hideCharms() {
         if (System.getProperty("os.version").equals("6.3") || System.getProperty("os.version").equals("6.2")) {
             Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 1);
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableTRCorner", 1);
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableTLCorner", 1);
         }
     }
 
@@ -94,6 +101,8 @@ public class OperatorBlockUtil {
     public static void showCharms() {
         if (System.getProperty("os.version").equals("6.3") || System.getProperty("os.version").equals("6.2")) {
             Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableCharmsHint", 0);
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableTRCorner", 0);
+            Advapi32Util.registrySetIntValue(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell\\EdgeUI", "DisableTLCorner", 0);
         }
     }
 
@@ -121,9 +130,7 @@ public class OperatorBlockUtil {
     }
 
     public static void enableAllBlocking() {
-        if (IniFileUtil.getSetting().isDisableKeys()) {
-            blockWindowsKey();
-        }
+        blockWindowsKey();
         if (IniFileUtil.getSetting().isDisableTaskManager()) {
             ctrlAltDelDisable();
         }
