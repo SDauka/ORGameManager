@@ -113,6 +113,8 @@ public class ThumbnailUtil {
             }
             pid = GameProcessUtil.startGame(game);
             long startTime = System.currentTimeMillis();
+            GamesFormCTRL.generalSession.setCountStart(GamesFormCTRL.generalSession.getCountStart() + 1);
+            GamesFormCTRL.generalSession.setSum(GamesFormCTRL.generalSession.getSum() + game.getCost());
             timeOut = new TimerTask() {
                 @Override
                 public void run() {
@@ -132,9 +134,6 @@ public class ThumbnailUtil {
                 public void run() {
                     try {
                         SessionDetails sessionDetails = new SessionDetails();
-                        GamesFormCTRL.generalSession.setCountStart(GamesFormCTRL.generalSession.getCountStart() + 1);
-                        GamesFormCTRL.generalSession.setSum(GamesFormCTRL.generalSession.getSum() + game.getCost());
-                        GamesFormCTRL.generalSession.setOperator(GamesFormCTRL.getGeneralOperator().getName());
                         sessionDetails.setGameName(game.getName());
                         sessionDetails.setSessionBySessionId(GamesFormCTRL.generalSession);
                         sessionDetails.setStartTime(new Timestamp(new Date().getTime()));
