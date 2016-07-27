@@ -27,8 +27,14 @@ public class GameProcessUtil {
     public static int startGame(Game game) {
         int pr_pid = 0;
         List<String> command = new ArrayList<>();
-        command.add(game.getPath());
-        command.addAll(Arrays.asList(game.getAttribute().split(",")));
+
+        System.out.println("COMMANDSSSSSSSS "+game.getAttribute());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            command.add(game.getPath());
+        if(game.getAttribute()!= null) {
+            command.addAll(Arrays.asList(game.getAttribute().split(",")));
+        }
+
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             processBuilder.directory(new File(game.getPath().substring(0, game.getPath().lastIndexOf("\\") + 1)));
